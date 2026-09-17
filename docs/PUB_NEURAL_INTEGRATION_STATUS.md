@@ -53,3 +53,12 @@ Current trusted actors do not include an active PUB Crypto INGESTOR/CEO identity
 The graph projector checkpoint is HEALTHY but currently at global sequence 7, so there is also no evidence yet that it has processed a PUB Crypto validation event.
 
 Next gate: provision a dedicated PUB Crypto INGESTOR through the governed actor-registration flow, provision its machine secret out-of-band, then execute the adapter against the real database and verify event, idempotency and projector state.
+
+
+## Projector verification — 2026-09-17
+
+The live graph projector was explicitly advanced from sequence 8 through 39. It did not advance. The checkpoint remains sequence 7 and status changed to STALLED with error: event sequence 8 is MALFORMED.
+
+The first malformed event is a pre-existing REPOSITORY_OBSERVED event. Its payload stores repository observation fields at the top level, while the live reducer contract expects provenance.delivery_id and provenance.payload_hash plus nested payload data. This is an existing PUB Neural ingestion/projector contract mismatch, independent of PUB Crypto.
+
+No PUB Crypto event was created while investigating this blocker.
