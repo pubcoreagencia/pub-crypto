@@ -40,3 +40,16 @@ Therefore PUB Crypto must not fabricate or hard-code an assumed ingestion path.
 Until those gates pass, the artifact remains a **prepared integration payload**, not evidence of successful Neural persistence.
 
 No paper/live authorization depends on this artifact.
+
+
+## Live database proof status — 2026-09-17
+
+The real PUB Neural Supabase project was inspected directly. The `pub-crypto` holding project exists and is active. The canonical event log currently contains 39 events and the idempotency table contains 0 records.
+
+A disposable E2E actor provisioning attempt was deliberately rejected by the database because `trusted_actors.originating_event_id` is mandatory. This is correct fail-closed behavior: creating an INGESTOR actor cannot bypass the governed actor-registration path.
+
+Current trusted actors do not include an active PUB Crypto INGESTOR/CEO identity with credentials available to the runtime. Therefore no real `TRADING_VALIDATION` event was appended. No test event was left behind.
+
+The graph projector checkpoint is HEALTHY but currently at global sequence 7, so there is also no evidence yet that it has processed a PUB Crypto validation event.
+
+Next gate: provision a dedicated PUB Crypto INGESTOR through the governed actor-registration flow, provision its machine secret out-of-band, then execute the adapter against the real database and verify event, idempotency and projector state.
