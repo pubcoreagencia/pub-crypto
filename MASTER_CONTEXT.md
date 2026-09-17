@@ -3,7 +3,7 @@
 **Identificador Canônico:** `pub-crypto`
 **Vertical:** Finanças / Web3
 **Holding:** PUB Core Holding
-**Status de Maturidade:** OPERATIONAL RESEARCH FOUNDATION
+**Status de Maturidade:** BACKTEST VALIDATION V1
 **Nível de Prioridade:** MÉDIA
 **Data de Alinhamento:** 2026-09-17
 
@@ -69,7 +69,7 @@ O estado atual é uma fundação executável de DATA/RESEARCH/SHADOW. Não autor
 **Segurança:** segredos nunca entram em Git, prompts, logs ou memória neural.
 
 ## 7. Próximo estágio
-Adicionar adaptadores reais de market data, métricas estatísticas de backtest, walk-forward/out-of-sample, regime analysis e persistência governada no PUB Neural antes de qualquer paper/live gate.
+Adicionar walk-forward/out-of-sample, regime analysis, Monte Carlo, shadow validation e persistência governada no PUB Neural antes de qualquer paper/live gate.
 
 ## 8. Objetivo de longo prazo
 Construir um sistema capaz de operar continuamente dentro de limites explícitos, registrar cada decisão, medir seus resultados, aprender com evidência e institucionalizar apenas conhecimento validado.
