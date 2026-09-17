@@ -3,7 +3,7 @@
 **Identificador Canônico:** `pub-crypto`
 **Vertical:** Finanças / Web3
 **Holding:** PUB Core Holding
-**Status de Maturidade:** WALK-FORWARD / OUT-OF-SAMPLE FOUNDATION
+**Status de Maturidade:** REGIME ANALYSIS / MONTE CARLO FOUNDATION
 **Nível de Prioridade:** MÉDIA
 **Data de Alinhamento:** 2026-09-17
 
@@ -24,26 +24,16 @@ PUB Crypto integra-se ao PUB DEV LOOP / PDL para desenvolvimento e operação da
 - **PDL / ACP:** engenharia, automação operacional e ciclo de desenvolvimento.
 - **Exchange/Broker adapters:** somente via camada de execução governada.
 
-Documentos canônicos:
-- `docs/TRADING_OS_ARCHITECTURE.md`
-- `docs/AGENT_ROLES.md`
-- `docs/RISK_ENGINE_SPEC.md`
-- `docs/RESEARCH_ENGINE_SPEC.md`
-- `docs/BACKTEST_VALIDATION_SPEC.md`
-- `docs/SHADOW_ACCOUNT_SPEC.md`
-- `docs/DECISION_LEDGER_SPEC.md`
-- `docs/PUB_NEURAL_INTEGRATION.md`
-- `docs/LIVE_EXECUTION_GOVERNANCE.md`
-
 ## 3. Implementação Executável
 A fundação executável cobre:
-- contratos de domínio para market snapshot, evidence, research, proposal, portfolio, risk e decision;
 - research operacional com proveniência de dataset;
 - risk engine determinístico;
 - decision ledger append-only em memória;
 - shadow execution sem acesso a capital real;
-- backtest determinístico com custos e métricas descritivas;
-- walk-forward / out-of-sample com isolamento estrutural entre treino e teste;
+- backtest determinístico com custos e métricas;
+- walk-forward / out-of-sample com isolamento estrutural;
+- regime analysis descritiva por janelas;
+- Monte Carlo determinístico por bootstrap com seed;
 - testes unitários e CI em `.github/workflows/ci.yml`.
 
 Ainda não existe conector de exchange live, nem autorização para capital real.
@@ -58,7 +48,7 @@ Esses projetos são referências arquiteturais, não dependências obrigatórias
 ## 5. Maturidade
 `ARCHITECTURE BASELINE → DATA + BACKTEST → RESEARCH → WALK-FORWARD/OOS → REGIME/MONTE CARLO → SHADOW → PAPER → GOVERNED LIVE`
 
-O estado atual é uma fundação executável de validação DATA/RESEARCH/WALK-FORWARD/OOS/SHADOW. Não autoriza capital real. A capacidade live será habilitada apenas após os gates documentados.
+O estado atual adiciona validação de regimes históricos e resampling Monte Carlo. Isso não constitui evidência de alpha durável nem autorização para capital real.
 
 ## 6. Governança
 **Zero Fake Work:** toda implementação deve produzir código real, testes/gates válidos e publicação no GitHub.
@@ -69,7 +59,7 @@ O estado atual é uma fundação executável de validação DATA/RESEARCH/WALK-F
 **Segurança:** segredos nunca entram em Git, prompts, logs ou memória neural.
 
 ## 7. Próximo estágio
-Adicionar regime analysis, Monte Carlo / resampling, shadow validation e persistência governada no PUB Neural antes de qualquer paper/live gate.
+Conectar os resultados de backtest/walk-forward aos regimes, adicionar shadow validation e persistir artefatos de validação de forma governada no PUB Neural antes de qualquer paper/live gate.
 
 ## 8. Objetivo de longo prazo
 Construir um sistema capaz de operar continuamente dentro de limites explícitos, registrar cada decisão, medir seus resultados, aprender com evidência e institucionalizar apenas conhecimento validado.
