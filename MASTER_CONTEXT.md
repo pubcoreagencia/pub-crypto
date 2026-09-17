@@ -3,7 +3,7 @@
 **Identificador Canônico:** `pub-crypto`
 **Vertical:** Finanças / Web3
 **Holding:** PUB Core Holding
-**Status de Maturidade:** BACKTEST VALIDATION V1
+**Status de Maturidade:** WALK-FORWARD / OUT-OF-SAMPLE FOUNDATION
 **Nível de Prioridade:** MÉDIA
 **Data de Alinhamento:** 2026-09-17
 
@@ -35,18 +35,18 @@ Documentos canônicos:
 - `docs/PUB_NEURAL_INTEGRATION.md`
 - `docs/LIVE_EXECUTION_GOVERNANCE.md`
 
-## 3. Implementação V0
-O primeiro runtime executável está em `src/` e cobre:
+## 3. Implementação Executável
+A fundação executável cobre:
 - contratos de domínio para market snapshot, evidence, research, proposal, portfolio, risk e decision;
-- `ResearchEngine` com provider substituível e fixture auditável;
-- `RiskEngine` determinístico com kill switch, stale-data gate, exposição, drawdown, slippage e geometria da operação;
-- `DecisionLedger` append-only em memória;
-- `ShadowExecutionAdapter`, sem acesso a capital real;
-- `runShadowCycle`, conectando research → risk → decision → shadow execution;
-- testes unitários e de integração em `tests/`;
-- CI em `.github/workflows/ci.yml`.
+- research operacional com proveniência de dataset;
+- risk engine determinístico;
+- decision ledger append-only em memória;
+- shadow execution sem acesso a capital real;
+- backtest determinístico com custos e métricas descritivas;
+- walk-forward / out-of-sample com isolamento estrutural entre treino e teste;
+- testes unitários e CI em `.github/workflows/ci.yml`.
 
-Esta V0 é deliberadamente uma fundação executável. Ainda não existe conector de exchange live, nem autorização para capital real.
+Ainda não existe conector de exchange live, nem autorização para capital real.
 
 ## 4. Benchmark externo incorporado
 - **AutoHedge:** referência para separação de agentes e execução on-chain.
@@ -56,9 +56,9 @@ Esta V0 é deliberadamente uma fundação executável. Ainda não existe conecto
 Esses projetos são referências arquiteturais, não dependências obrigatórias.
 
 ## 5. Maturidade
-`ARCHITECTURE BASELINE → DATA + BACKTEST FOUNDATION → RESEARCH → SHADOW → PAPER → GOVERNED LIVE`
+`ARCHITECTURE BASELINE → DATA + BACKTEST → RESEARCH → WALK-FORWARD/OOS → REGIME/MONTE CARLO → SHADOW → PAPER → GOVERNED LIVE`
 
-O estado atual é uma fundação executável de DATA/RESEARCH/SHADOW. Não autoriza capital real. A capacidade live será habilitada apenas após os gates documentados.
+O estado atual é uma fundação executável de validação DATA/RESEARCH/WALK-FORWARD/OOS/SHADOW. Não autoriza capital real. A capacidade live será habilitada apenas após os gates documentados.
 
 ## 6. Governança
 **Zero Fake Work:** toda implementação deve produzir código real, testes/gates válidos e publicação no GitHub.
@@ -69,7 +69,7 @@ O estado atual é uma fundação executável de DATA/RESEARCH/SHADOW. Não autor
 **Segurança:** segredos nunca entram em Git, prompts, logs ou memória neural.
 
 ## 7. Próximo estágio
-Adicionar walk-forward/out-of-sample, regime analysis, Monte Carlo, shadow validation e persistência governada no PUB Neural antes de qualquer paper/live gate.
+Adicionar regime analysis, Monte Carlo / resampling, shadow validation e persistência governada no PUB Neural antes de qualquer paper/live gate.
 
 ## 8. Objetivo de longo prazo
 Construir um sistema capaz de operar continuamente dentro de limites explícitos, registrar cada decisão, medir seus resultados, aprender com evidência e institucionalizar apenas conhecimento validado.
