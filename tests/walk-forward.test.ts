@@ -62,7 +62,6 @@ describe('walk-forward validation', () => {
     expect(() => buildWalkForwardWindows(10, 0, 2)).toThrow('INVALID_TRAIN_SIZE');
     expect(() => buildWalkForwardWindows(10, 4, 0)).toThrow('INVALID_TEST_SIZE');
     expect(() => buildWalkForwardWindows(10, 4, 2, 0)).toThrow('INVALID_STEP');
-    expect(() => buildWalkForwardWindows(5, 4, 2)).not.toThrow();
-    expect(() => buildWalkForwardWindows(5, 4, 2)).toHaveLength(0);
+    expect(buildWalkForwardWindows(5, 4, 2)).toHaveLength(0);
   });
 });
