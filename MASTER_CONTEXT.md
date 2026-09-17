@@ -1,38 +1,59 @@
 # MASTER CONTEXT — Pub Crypto
 
-**Identificador Canônico:** `pub-crypto`  
-**Vertical:** Finanças / Web3  
-**Holding:** PUB Core Holding  
-**Status de Maturidade:** IDEA  
-**Nível de Prioridade:** MÉDIA  
-**Data de Alinhamento:** 2026-09-05  
+**Identificador Canônico:** `pub-crypto`
+**Vertical:** Finanças / Web3
+**Holding:** PUB Core Holding
+**Status de Maturidade:** ARCHITECTURE BASELINE
+**Nível de Prioridade:** MÉDIA
+**Data de Alinhamento:** 2026-09-17
 
 ---
 
 ## 1. Visão Executiva & Propósito
-Gestão de tesouraria em criptoativos e infraestrutura blockchain.
+PUB Crypto é o runtime financeiro da PUB Core Holding para pesquisa, validação, gestão de portfólio e futura operação autônoma em criptoativos.
 
-O projeto integra a esteira de desenvolvimento autônomo da holding (**PUB DEV LOOP / PDL**), com atuação contínua dos agentes especializados (Arquitetura, Desenvolvimento, QA, Segurança e Operações).
+O sistema é concebido como um **Trading OS**, não como um simples bot. Seu ciclo canônico é:
 
----
+`OBSERVE → RESEARCH → SYNTHESIZE → RISK → DECIDE → VALIDATE → EXECUTE → ATTRIBUTE → LEARN → INSTITUTIONALIZE`
 
-## 2. Nível de Maturidade & Classificação
-- **Maturidade Atual:** `IDEA`
-  - *ONLINE / EM PRODUÇÃO:* Sistemas em execução na nuvem com clientes ativos e tráfego live.
-  - *EM DEV / GITHUB:* Repositório provisionado, código-fonte versionado e features em pipeline.
-  - *IDEA / DESIGN:* Projeto conceitualizado e documentado no Master Context, estruturado para prototipação e bootstrapping no PDL.
-- **Prioridade:** `MÉDIA`
+PUB Crypto integra-se ao PUB DEV LOOP / PDL para desenvolvimento e operação da infraestrutura, mas a autoridade financeira permanece dentro dos gates de risco e execução do próprio domínio.
 
----
+## 2. Arquitetura Canônica
+- **PUB Crypto:** observação, pesquisa, estratégias, portfólio, risco, validação, shadow/paper/live e execução.
+- **PUB Neural:** memória, evidência, decisões, lessons, patterns, governance e conhecimento institucional.
+- **PDL / ACP:** engenharia, automação operacional e ciclo de desenvolvimento.
+- **Exchange/Broker adapters:** somente via camada de execução governada.
 
-## 3. Diretrizes de Desenvolvimento Autônomo 24h
-1. **Zero Fake Work:** Todas as tarefas devem resultar em código real, testes válidos e commits no repositório correspondente.
-2. **Modularidade:** Componentes desenvolvidos neste projeto devem seguir as diretrizes da PUB Core Holding de reutilização e segurança.
-3. **Governança:** Dr. Arthur Vance e a equipe de especialistas gerenciam o backlog, tomada de decisão e relatórios executivos para o CEO Matheus Paes.
+Documentos canônicos:
+- `docs/TRADING_OS_ARCHITECTURE.md`
+- `docs/AGENT_ROLES.md`
+- `docs/RISK_ENGINE_SPEC.md`
+- `docs/RESEARCH_ENGINE_SPEC.md`
+- `docs/BACKTEST_VALIDATION_SPEC.md`
+- `docs/SHADOW_ACCOUNT_SPEC.md`
+- `docs/DECISION_LEDGER_SPEC.md`
+- `docs/PUB_NEURAL_INTEGRATION.md`
+- `docs/LIVE_EXECUTION_GOVERNANCE.md`
 
----
+## 3. Benchmark externo incorporado
+- **AutoHedge:** referência para separação de agentes e execução on-chain.
+- **Vibe-Trading:** referência para research OS, grounded metrics, backtesting, shadow account, regime analysis, Monte Carlo e trading governance.
+- **AI-Trader:** referência futura para rede de agentes, sinais e copy-trading.
 
-## 4. Rastreabilidade & Conexões
-- **Master Context Geral:** `docs/PUBMASTERMEGABLASTERCONTEXT.md`
-- **Orquestrador:** PUB DEV LOOP
-- **Repositório GitHub:** `pubcoreagencia/pub-crypto`
+Esses projetos são referências arquiteturais, não dependências obrigatórias.
+
+## 4. Maturidade
+`ARCHITECTURE BASELINE → DATA → RESEARCH → BACKTEST → SHADOW → PAPER → GOVERNED LIVE`
+
+O estado atual não autoriza capital real. A capacidade live será habilitada apenas após os gates documentados.
+
+## 5. Governança
+**Zero Fake Work:** toda implementação deve produzir código real, testes/gates válidos e publicação no GitHub.
+
+**GitHub é a fonte de verdade.** Seguir `PUB_GIT_CLOSURE_RULE.md`:
+`IMPLEMENT → TEST → COMMIT → PUSH → VERIFY REMOTE → DECLARE CLOSED → NEXT STAGE`
+
+**Segurança:** segredos nunca entram em Git, prompts, logs ou memória neural.
+
+## 6. Objetivo de longo prazo
+Construir um sistema capaz de operar continuamente dentro de limites explícitos, registrar cada decisão, medir seus resultados, aprender com evidência e institucionalizar apenas conhecimento validado.
