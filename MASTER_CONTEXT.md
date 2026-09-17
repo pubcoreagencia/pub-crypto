@@ -56,7 +56,7 @@ Esta V0 é deliberadamente uma fundação executável. Ainda não existe conecto
 Esses projetos são referências arquiteturais, não dependências obrigatórias.
 
 ## 5. Maturidade
-`ARCHITECTURE BASELINE → DATA → RESEARCH → BACKTEST → SHADOW → PAPER → GOVERNED LIVE`
+`ARCHITECTURE BASELINE → DATA + BACKTEST FOUNDATION → RESEARCH → SHADOW → PAPER → GOVERNED LIVE`
 
 O estado atual é uma fundação executável de DATA/RESEARCH/SHADOW. Não autoriza capital real. A capacidade live será habilitada apenas após os gates documentados.
 
