@@ -3,7 +3,7 @@
 **Identificador Canônico:** `pub-crypto`
 **Vertical:** Finanças / Web3
 **Holding:** PUB Core Holding
-**Status de Maturidade:** ARCHITECTURE BASELINE
+**Status de Maturidade:** DATA / RESEARCH / SHADOW FOUNDATION
 **Nível de Prioridade:** MÉDIA
 **Data de Alinhamento:** 2026-09-17
 
@@ -35,19 +35,32 @@ Documentos canônicos:
 - `docs/PUB_NEURAL_INTEGRATION.md`
 - `docs/LIVE_EXECUTION_GOVERNANCE.md`
 
-## 3. Benchmark externo incorporado
+## 3. Implementação V0
+O primeiro runtime executável está em `src/` e cobre:
+- contratos de domínio para market snapshot, evidence, research, proposal, portfolio, risk e decision;
+- `ResearchEngine` com provider substituível e fixture auditável;
+- `RiskEngine` determinístico com kill switch, stale-data gate, exposição, drawdown, slippage e geometria da operação;
+- `DecisionLedger` append-only em memória;
+- `ShadowExecutionAdapter`, sem acesso a capital real;
+- `runShadowCycle`, conectando research → risk → decision → shadow execution;
+- testes unitários e de integração em `tests/`;
+- CI em `.github/workflows/ci.yml`.
+
+Esta V0 é deliberadamente uma fundação executável. Ainda não existe conector de exchange live, nem autorização para capital real.
+
+## 4. Benchmark externo incorporado
 - **AutoHedge:** referência para separação de agentes e execução on-chain.
 - **Vibe-Trading:** referência para research OS, grounded metrics, backtesting, shadow account, regime analysis, Monte Carlo e trading governance.
 - **AI-Trader:** referência futura para rede de agentes, sinais e copy-trading.
 
 Esses projetos são referências arquiteturais, não dependências obrigatórias.
 
-## 4. Maturidade
+## 5. Maturidade
 `ARCHITECTURE BASELINE → DATA → RESEARCH → BACKTEST → SHADOW → PAPER → GOVERNED LIVE`
 
-O estado atual não autoriza capital real. A capacidade live será habilitada apenas após os gates documentados.
+O estado atual é uma fundação executável de DATA/RESEARCH/SHADOW. Não autoriza capital real. A capacidade live será habilitada apenas após os gates documentados.
 
-## 5. Governança
+## 6. Governança
 **Zero Fake Work:** toda implementação deve produzir código real, testes/gates válidos e publicação no GitHub.
 
 **GitHub é a fonte de verdade.** Seguir `PUB_GIT_CLOSURE_RULE.md`:
@@ -55,5 +68,8 @@ O estado atual não autoriza capital real. A capacidade live será habilitada ap
 
 **Segurança:** segredos nunca entram em Git, prompts, logs ou memória neural.
 
-## 6. Objetivo de longo prazo
+## 7. Próximo estágio
+Implementar a camada de dados real e pesquisa operacional, preservando os contratos atuais: market data adapter com timestamp/proveniência, normalização/time alignment, research artifacts persistentes, backtest engine e validação walk-forward/out-of-sample antes de qualquer paper/live gate.
+
+## 8. Objetivo de longo prazo
 Construir um sistema capaz de operar continuamente dentro de limites explícitos, registrar cada decisão, medir seus resultados, aprender com evidência e institucionalizar apenas conhecimento validado.
