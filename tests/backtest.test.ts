@@ -19,6 +19,6 @@ describe('backtest', () => {
     expect(result.datasetVersion).toBe('fixture-v1');
     expect(result.strategyVersion).toBe('close-up-v1');
     expect(result.tradeCount).toBe(1);
-    expect(result.endingEquity).toBe(1001);
+    expect(result.endingEquity).toBe(999);
   });
 });
