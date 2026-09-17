@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import type { NeuralValidationArtifact } from '../src/neural-validation.js';
-import { PubNeuralIngestionClient, type NeuralSqlExecutor } from '../src/neural-ingestion.js';
+import { PubNeuralIngestionClient, type NeuralSqlTransaction } from '../src/neural-ingestion.js';
 
 const artifact: NeuralValidationArtifact = {
   artifactType: 'TRADING_VALIDATION',
@@ -16,17 +16,26 @@ const artifact: NeuralValidationArtifact = {
   source: 'PUB_CRYPTO'
 };
 
+function transactionMock(responses: Array<{ rows: unknown[] }>) {
+  const query = vi.fn();
+  for (const response of responses) query.mockResolvedValueOnce(response);
+  const transaction = vi.fn(async (fn: (tx: NeuralSqlTransaction) => Promise<unknown>) => fn({ query }));
+  return { query, transaction };
+}
+
 describe('PubNeuralIngestionClient', () => {
-  it('uses the governed session and append_event path', async () => {
-    const query = vi.fn()
-      .mockResolvedValueOnce({ rows: [] }) // idempotency lookup
-      .mockResolvedValueOnce({ rows: [{ token: 'opaque-token' }] }) // session
-      .mockResolvedValueOnce({ rows: [{ attached: true }] }) // attach
-      .mockResolvedValueOnce({ rows: [{ global_sequence: 42 }] }) // append
-      .mockResolvedValueOnce({ rows: [] }); // idempotency record
+  it('uses one transaction for session attachment and append_event', async () => {
+    const db = transactionMock([
+      { rows: [] },
+      { rows: [] },
+      { rows: [{ token: 'opaque-token' }] },
+      { rows: [{ attached: true }] },
+      { rows: [{ global_sequence: 42 }] },
+      { rows: [] }
+    ]);
 
     const client = new PubNeuralIngestionClient(
-      { query } satisfies NeuralSqlExecutor,
+      db,
       { actorId: 'actor:pub-crypto:ingestor', machineSecret: 'secret', projectId: 'pub-crypto' }
     );
 
@@ -34,8 +43,11 @@ describe('PubNeuralIngestionClient', () => {
 
     expect(result.globalSequence).toBe(42);
     expect(result.idempotentReplay).toBe(false);
-    expect(query.mock.calls.map((call) => call[0])).toEqual([
+    expect(db.transaction).toHaveBeenCalledTimes(1);
+    expect(db.query).toHaveBeenCalledTimes(6);
+    expect(db.query.mock.calls.map((call) => call[0])).toEqual([
       expect.stringContaining('neural_idempotency_records'),
+      expect.stringContaining('neural_events'),
       expect.stringContaining('establish_session_context'),
       expect.stringContaining('attach_session'),
       expect.stringContaining('append_event'),
@@ -44,18 +56,13 @@ describe('PubNeuralIngestionClient', () => {
   });
 
   it('replays an existing idempotency record without appending another event', async () => {
-    const query = vi.fn()
-      .mockResolvedValueOnce({
-        rows: [{
-          idempotency_key: 'existing',
-          resulting_event_id: '11111111-1111-5111-8111-111111111111',
-          response_payload: {}
-        }]
-      })
-      .mockResolvedValueOnce({ rows: [{ global_sequence: 7 }] });
+    const db = transactionMock([
+      { rows: [{ resulting_event_id: '11111111-1111-5111-8111-111111111111' }] },
+      { rows: [{ global_sequence: 7 }] }
+    ]);
 
     const client = new PubNeuralIngestionClient(
-      { query } satisfies NeuralSqlExecutor,
+      db,
       { actorId: 'actor:pub-crypto:ingestor', machineSecret: 'secret' }
     );
 
@@ -63,17 +70,19 @@ describe('PubNeuralIngestionClient', () => {
 
     expect(result.idempotentReplay).toBe(true);
     expect(result.globalSequence).toBe(7);
-    expect(query).toHaveBeenCalledTimes(2);
+    expect(db.transaction).toHaveBeenCalledTimes(1);
+    expect(db.query).toHaveBeenCalledTimes(2);
   });
 
   it('fails closed when lineage is incomplete', async () => {
-    const query = vi.fn();
+    const db = transactionMock([]);
+
     const client = new PubNeuralIngestionClient(
-      { query } satisfies NeuralSqlExecutor,
+      db,
       { actorId: 'actor:pub-crypto:ingestor', machineSecret: 'secret' }
     );
 
     await expect(client.ingestTradingValidation(artifact, 'x')).rejects.toThrow('INVALID_SOURCE_COMMIT');
-    expect(query).not.toHaveBeenCalled();
+    expect(db.transaction).not.toHaveBeenCalled();
   });
 });
